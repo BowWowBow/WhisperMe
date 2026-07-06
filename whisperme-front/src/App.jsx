@@ -2663,7 +2663,7 @@ function App() {
           </section>
 
           <section className="content-layout">
-            <div className="chat-panel">
+            <div className={`chat-panel ${homeMode ? "home-chat-panel" : ""}`}>
               <div className="chat-header chat-header-plus">
                 <div>
                   <p>{favoriteMode ? "FAVORITE" : "AI 채팅"}</p>

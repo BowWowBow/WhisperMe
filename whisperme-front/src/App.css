@@ -4630,3 +4630,21 @@ body {
     box-shadow: none !important;
   }
 }
+
+@media (max-width: 850px) {
+  .home-chat-panel .message-list {
+    padding: 0 !important;
+    overflow: hidden !important;
+    scrollbar-width: none !important;
+  }
+
+  .home-chat-panel .message-list::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .home-chat-panel {
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
