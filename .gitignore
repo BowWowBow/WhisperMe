@@ -1,0 +1,23 @@
+# Environment
+.env
+*.env
+
+# IntelliJ
+.idea/
+*.iml
+
+# Java / Gradle
+.gradle/
+build/
+out/
+
+# React / Node
+node_modules/
+dist/
+.vite/
+
+# Logs
+*.log
+
+# Uploads
+uploads/

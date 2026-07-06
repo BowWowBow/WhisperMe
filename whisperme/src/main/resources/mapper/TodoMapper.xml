@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.whisperme.mapper.TodoMapper">
+
+    <!--
+        오늘 목록은 완료/미완료를 모두 가져와야 합니다.
+        그래야 프론트에서
+        - 남은 개수: done = false
+        - 완료 개수: done = true
+        를 정확히 계산할 수 있습니다.
+    -->
+    <select id="findToday"
+            parameterType="long"
+            resultType="com.example.whisperme.domain.Todo">
+        SELECT
+        id,
+        member_id AS memberId,
+        content,
+        done,
+        todo_date AS todoDate,
+        created_at AS createdAt
+        FROM todo
+        WHERE member_id = #{memberId}
+        AND todo_date = CURDATE()
+        ORDER BY done ASC, id DESC
+    </select>
+
+    <select id="findFuture"
+            parameterType="long"
+            resultType="com.example.whisperme.domain.Todo">
+        SELECT
+        id,
+        member_id AS memberId,
+        content,
+        done,
+        todo_date AS todoDate,
+        created_at AS createdAt
+        FROM todo
+        WHERE member_id = #{memberId}
+        AND todo_date &gt; CURDATE()
+        AND done = false
+        ORDER BY todo_date ASC, id DESC
+    </select>
+
+    <!--
+        지난 목록은 날짜가 지난 것만 가져옵니다.
+        기존처럼 OR done = true 를 넣으면 오늘 완료한 일도 지난 내역으로 이동합니다.
+    -->
+    <select id="findPast"
+            parameterType="long"
+            resultType="com.example.whisperme.domain.Todo">
+        SELECT
+        id,
+        member_id AS memberId,
+        content,
+        done,
+        todo_date AS todoDate,
+        created_at AS createdAt
+        FROM todo
+        WHERE member_id = #{memberId}
+        AND todo_date &lt; CURDATE()
+        ORDER BY todo_date DESC, id DESC
+    </select>
+
+    <insert id="insertTodo"
+            parameterType="com.example.whisperme.domain.Todo">
+        INSERT INTO todo (
+        member_id,
+        content,
+        done,
+        todo_date
+        )
+        VALUES (
+        #{memberId},
+        #{content},
+        false,
+        #{todoDate}
+        )
+    </insert>
+
+    <update id="updateDone"
+            parameterType="long">
+        UPDATE todo
+        SET done = true
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteTodo"
+            parameterType="long">
+        DELETE FROM todo
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

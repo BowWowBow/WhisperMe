@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.whisperme.mapper.ChatMapper">
+
+    <insert id="insertChat"
+            parameterType="com.example.whisperme.domain.ChatHistory">
+
+        INSERT INTO chat_history
+        (
+        member_id,
+        user_message,
+        ai_message
+        )
+        VALUES
+        (
+        #{memberId},
+        #{userMessage},
+        #{aiMessage}
+        )
+
+    </insert>
+
+    <select id="findByMemberId"
+            parameterType="long"
+            resultType="com.example.whisperme.domain.ChatHistory">
+
+        SELECT
+        id,
+        member_id AS memberId,
+        user_message AS userMessage,
+        ai_message AS aiMessage,
+        created_at AS createdAt
+        FROM chat_history
+        WHERE member_id = #{memberId}
+        ORDER BY id DESC
+
+    </select>
+
+    <delete id="deleteChat" parameterType="long">
+
+        DELETE FROM chat_history
+        WHERE id = #{id}
+
+    </delete>
+
+    <update id="updateChat"
+            parameterType="com.example.whisperme.domain.ChatHistory">
+
+        UPDATE chat_history
+        SET
+        user_message = #{userMessage},
+        ai_message = #{aiMessage}
+        WHERE id = #{id}
+
+    </update>
+
+</mapper>

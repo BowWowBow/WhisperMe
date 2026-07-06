@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.whisperme.mapper.ChatMessageMapper">
+
+    <insert id="insert"
+            parameterType="com.example.whisperme.domain.ChatMessage">
+
+        INSERT INTO chat_message (
+        room_id,
+        role,
+        content,
+        deleted_yn,
+        message_type,
+        file_name,
+        file_url
+        )
+        VALUES (
+        #{roomId},
+        #{role},
+        #{content},
+        'N',
+        #{messageType},
+        #{fileName},
+        #{fileUrl}
+        )
+
+    </insert>
+
+    <select id="findByRoomId"
+            parameterType="long"
+            resultType="com.example.whisperme.domain.ChatMessage">
+
+        SELECT
+        id,
+        room_id AS roomId,
+        role,
+        content,
+        deleted_yn AS deletedYn,
+        message_type AS messageType,
+        file_name AS fileName,
+        file_url AS fileUrl,
+        created_at AS createdAt
+        FROM chat_message
+        WHERE room_id = #{roomId}
+        AND deleted_yn = 'N'
+        ORDER BY id ASC
+
+    </select>
+
+    <select id="findRecentTextByRoomId"
+            resultType="com.example.whisperme.domain.ChatMessage">
+
+        SELECT
+        id,
+        room_id AS roomId,
+        role,
+        content,
+        deleted_yn AS deletedYn,
+        message_type AS messageType,
+        file_name AS fileName,
+        file_url AS fileUrl,
+        created_at AS createdAt
+        FROM chat_message
+        WHERE room_id = #{roomId}
+        AND deleted_yn = 'N'
+        AND message_type = 'TEXT'
+        AND content IS NOT NULL
+        AND content != ''
+        ORDER BY id DESC
+        LIMIT #{limit}
+
+    </select>
+
+    <select id="search"
+            resultType="com.example.whisperme.domain.ChatMessage">
+
+        SELECT
+        id,
+        room_id AS roomId,
+        role,
+        content,
+        deleted_yn AS deletedYn,
+        message_type AS messageType,
+        file_name AS fileName,
+        file_url AS fileUrl,
+        created_at AS createdAt
+        FROM chat_message
+        WHERE room_id = #{roomId}
+        AND deleted_yn = 'N'
+        AND content LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY id ASC
+
+    </select>
+
+    <update id="deleteByRoomId"
+            parameterType="long">
+
+        UPDATE chat_message
+        SET deleted_yn = 'Y'
+        WHERE room_id = #{roomId}
+
+    </update>
+
+</mapper>

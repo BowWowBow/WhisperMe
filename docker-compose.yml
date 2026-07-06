@@ -1,0 +1,42 @@
+name: whisperme
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: whisperme-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: whisperme
+      TZ: Asia/Seoul
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./whisperme.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build:
+      context: ./whisperme
+    container_name: whisperme-backend
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8083:8083"
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: ./whisperme-front
+    container_name: whisperme-front
+    restart: always
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:

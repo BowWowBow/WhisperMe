@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.whisperme.mapper.ChatRoomMapper">
+
+    <insert id="insert"
+            parameterType="com.example.whisperme.domain.ChatRoom">
+        INSERT INTO chat_room (
+        member_id,
+        title,
+        deleted_yn
+        )
+        VALUES (
+        #{memberId},
+        #{title},
+        'N'
+        )
+    </insert>
+
+    <select id="findByMemberId"
+            resultType="com.example.whisperme.domain.ChatRoom">
+        SELECT
+        id,
+        member_id AS memberId,
+        title,
+        deleted_yn AS deletedYn,
+        created_at AS createdAt
+        FROM chat_room
+        WHERE deleted_yn = 'N'
+        AND member_id = #{memberId}
+        ORDER BY id DESC
+    </select>
+
+    <select id="findById"
+            parameterType="long"
+            resultType="com.example.whisperme.domain.ChatRoom">
+        SELECT
+        id,
+        member_id AS memberId,
+        title,
+        deleted_yn AS deletedYn,
+        created_at AS createdAt
+        FROM chat_room
+        WHERE id = #{id}
+        AND deleted_yn = 'N'
+    </select>
+
+    <select id="search"
+            resultType="com.example.whisperme.domain.ChatRoom">
+        SELECT
+        id,
+        member_id AS memberId,
+        title,
+        deleted_yn AS deletedYn,
+        created_at AS createdAt
+        FROM chat_room
+        WHERE deleted_yn = 'N'
+        AND member_id = #{memberId}
+        AND title LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY id DESC
+    </select>
+
+    <update id="updateTitle"
+            parameterType="com.example.whisperme.domain.ChatRoom">
+        UPDATE chat_room
+        SET title = #{title}
+        WHERE id = #{id}
+        AND deleted_yn = 'N'
+    </update>
+
+    <update id="delete"
+            parameterType="long">
+        UPDATE chat_room
+        SET deleted_yn = 'Y'
+        WHERE id = #{id}
+    </update>
+
+</mapper>
