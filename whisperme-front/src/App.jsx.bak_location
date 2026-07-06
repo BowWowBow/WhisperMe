@@ -2183,9 +2183,10 @@ function App() {
     loadRooms();
     loadTodos();
 
-    // 위치/날씨는 자동 실행하지 않습니다.
-    // 사용자가 "현재 위치" 버튼을 눌렀을 때만 loadWeather()가 실행됩니다.
-
+    // 로그인 후 위치기반 날씨 자동 호출
+    setTimeout(() => {
+      loadWeather();
+    }, 500);
   }, [loginMember]);
 
   useEffect(() => {
