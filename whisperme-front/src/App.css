@@ -4384,3 +4384,230 @@ body:has(.app.dark-mode) .pretty-notice .notice-icon {
     font-size: 14px !important;
   }
 }
+
+/* =========================================================
+   Mobile Final Fix - 2026
+   - 모바일 오른쪽 하늘색 세로줄 제거
+   - 모바일 고래 애니메이션 유지
+   - 화면 가로 넘침 방지
+   ========================================================= */
+
+html,
+body,
+#root {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 100% !important;
+  margin: 0 !important;
+  overflow-x: hidden !important;
+}
+
+body {
+  position: relative !important;
+  background: #f8fbff !important;
+}
+
+#root {
+  background: #f8fbff !important;
+}
+
+.app {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+.main,
+.content-layout,
+.chat-panel,
+.todo-panel,
+.whisper-home,
+.message-list,
+.composer-wrap,
+.input-area {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* 고래 애니메이션 강제 유지 */
+.whale {
+  animation: swimAcross 18s linear infinite !important;
+  will-change: left, transform !important;
+}
+
+/* 모바일 전용 최종 보정 */
+@media (max-width: 850px) {
+  html,
+  body,
+  #root {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    background: #f8fbff !important;
+  }
+
+  .app {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100dvh !important;
+    overflow-x: hidden !important;
+    background: #f8fbff !important;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .main {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    margin: 0 !important;
+    overflow-x: hidden !important;
+    background: #f8fbff !important;
+  }
+
+  .today-area,
+  .mobile-info-area,
+  .content-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .chat-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border-right: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .message-list {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    overflow-x: hidden !important;
+  }
+
+  .composer-wrap,
+  .input-area {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .input-area {
+    display: grid !important;
+    grid-template-columns: 40px 40px minmax(0, 1fr) 48px !important;
+    gap: 5px !important;
+  }
+
+  .input-area textarea {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .input-area button,
+  .file-upload-btn,
+  .voice-input-btn {
+    flex-shrink: 0 !important;
+  }
+
+  .whisper-home {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    overflow: hidden !important;
+  }
+
+  .ocean {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .wave {
+    max-width: none !important;
+  }
+
+  .whale {
+    top: 58px !important;
+    left: -90px !important;
+    font-size: 48px !important;
+    animation: swimAcrossMobile 11s linear infinite !important;
+    will-change: left, transform !important;
+  }
+
+  .bubble,
+  .markdown-message,
+  .favorite-card,
+  .favorite-page,
+  .favorite-page-hero {
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .main {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .chat-panel {
+    border-radius: 20px !important;
+  }
+
+  .message-list {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .whale {
+    top: 58px !important;
+    font-size: 48px !important;
+    animation: swimAcrossMobile 10s linear infinite !important;
+  }
+}
+
+@keyframes swimAcrossMobile {
+  0% {
+    left: -90px;
+    transform: translateY(0) rotate(-4deg);
+  }
+
+  20% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+
+  40% {
+    transform: translateY(6px) rotate(-2deg);
+  }
+
+  60% {
+    transform: translateY(-7px) rotate(3deg);
+  }
+
+  80% {
+    transform: translateY(5px) rotate(-2deg);
+  }
+
+  100% {
+    left: calc(100% + 90px);
+    transform: translateY(0) rotate(-4deg);
+  }
+}
