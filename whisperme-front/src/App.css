@@ -2862,3 +2862,243 @@ body:has(.app.dark-mode) .pretty-notice .notice-icon {
   text-align: center !important;
   display: block !important;
 }
+
+/* =========================================================
+   Mobile Layout Final Fix
+   - 모바일에서 사이드바만 보이고 채팅/카드가 안 보이는 문제 해결
+   - 로그인/회원가입 카드 크기 축소
+   - 홈/오늘카드/채팅창 반응형 개선
+   ========================================================= */
+
+@media (max-width: 850px) {
+  html,
+  body,
+  #root {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  .app {
+    display: block !important;
+    min-height: 100vh !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .sidebar {
+    width: 100% !important;
+    padding: 22px 18px 18px !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.22) !important;
+  }
+
+  .brand {
+    margin-bottom: 18px !important;
+    justify-content: center !important;
+  }
+
+  .brand h1 {
+    font-size: 26px !important;
+  }
+
+  .brand p {
+    font-size: 13px !important;
+  }
+
+  .member-box {
+    padding: 18px !important;
+    border-radius: 24px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .member-box h2[style] {
+    font-size: 21px !important;
+    padding: 8px 18px !important;
+  }
+
+  .main {
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    padding: 18px !important;
+  }
+
+  .today-area {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    margin-bottom: 18px !important;
+  }
+
+  .today-card {
+    min-height: auto !important;
+    padding: 18px !important;
+    border-radius: 22px !important;
+  }
+
+  .today-card h3 {
+    font-size: 22px !important;
+    margin: 8px 0 6px !important;
+  }
+
+  .today-card p {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  .content-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .chat-panel {
+    width: 100% !important;
+    min-height: 620px !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    border-radius: 24px !important;
+  }
+
+  .message-list {
+    min-height: 360px !important;
+    max-height: 56vh !important;
+    overflow-y: auto !important;
+    padding: 18px !important;
+  }
+
+  .chat-header {
+    padding: 20px 18px !important;
+  }
+
+  .chat-header h2 {
+    font-size: 23px !important;
+  }
+
+  .bubble {
+    max-width: 88% !important;
+    font-size: 14px !important;
+  }
+
+  .composer-wrap {
+    position: sticky !important;
+    bottom: 0 !important;
+    padding: 12px !important;
+  }
+
+  .input-area {
+    padding: 0 !important;
+    gap: 8px !important;
+  }
+
+  .input-area textarea,
+  .input-area input {
+    min-height: 48px !important;
+    font-size: 14px !important;
+  }
+
+  .input-area button:not(.file-upload-btn):not(.voice-input-btn) {
+    width: 64px !important;
+    min-width: 64px !important;
+  }
+
+  .todo-panel {
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 20px 16px !important;
+    border-radius: 24px !important;
+  }
+
+  .todo-input-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .whisper-home {
+    min-height: auto !important;
+    padding: 22px 14px 28px !important;
+  }
+
+  .ocean {
+    height: 230px !important;
+    border-radius: 28px !important;
+  }
+
+  .whale {
+    top: 78px !important;
+    font-size: 72px !important;
+  }
+
+  .whisper-home h1 {
+    margin-top: 26px !important;
+    font-size: 42px !important;
+    letter-spacing: -2px !important;
+  }
+
+  .whisper-home p {
+    font-size: 15px !important;
+  }
+
+  .start-chat-btn {
+    margin-top: 24px !important;
+    padding: 14px 26px !important;
+    border-radius: 20px !important;
+    font-size: 16px !important;
+  }
+}
+
+/* 로그인/회원가입 모바일 크기 축소 */
+@media (max-width: 640px) {
+  .login-page {
+    min-height: 100vh !important;
+    padding: 18px !important;
+    align-items: flex-start !important;
+    padding-top: 42px !important;
+  }
+
+  .login-container,
+  .login-card {
+    width: 100% !important;
+    padding: 30px 24px !important;
+    border-radius: 30px !important;
+  }
+
+  .login-logo {
+    width: 58px !important;
+    height: 58px !important;
+    font-size: 30px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .login-container h1,
+  .login-card h1 {
+    font-size: 28px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .login-card p {
+    margin: 8px 0 22px !important;
+    font-size: 14px !important;
+  }
+
+  .login-container input,
+  .login-card input,
+  .login-form input {
+    height: 48px !important;
+    margin-bottom: 10px !important;
+    border-radius: 15px !important;
+  }
+
+  .login-container button,
+  .login-card button,
+  .login-form button {
+    height: 48px !important;
+    border-radius: 16px !important;
+  }
+}
