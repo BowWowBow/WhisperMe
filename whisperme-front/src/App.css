@@ -4611,3 +4611,22 @@ body {
     transform: translateY(0) rotate(-4deg);
   }
 }
+
+
+/* 모바일 오른쪽 세로선 완전 제거 */
+@media (max-width: 850px) {
+  .whisper-home::after,
+  .ocean::after {
+    display: none !important;
+    content: none !important;
+    border: 0 !important;
+  }
+
+  .whisper-home,
+  .ocean,
+  .chat-panel,
+  .main {
+    border-right: 0 !important;
+    box-shadow: none !important;
+  }
+}
