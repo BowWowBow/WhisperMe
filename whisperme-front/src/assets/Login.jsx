@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_BASE = "http://localhost:8083";
+const API_BASE = "http://43.203.123.217:8083";
 
 function Login() {
   const [loginId, setLoginId] = useState("");
