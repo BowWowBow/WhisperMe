@@ -1584,10 +1584,45 @@ function App() {
   };
 
   const loadWeather = () => {
+    const fallbackLocation = {
+      name: "김해시",
+      lat: 35.2285,
+      lon: 128.8893,
+    };
+
+    const fetchWeatherByCoords = async (lat, lon, locationLabel, fallback = false) => {
+      try {
+        const res = await fetch(`${API_BASE}/api/weather?latitude=${lat}&longitude=${lon}`);
+
+        if (!res.ok) {
+          throw new Error("날씨 API 응답 실패");
+        }
+
+        const data = await res.json();
+
+        setWeather(data.current_weather);
+        setLocationName(locationLabel);
+        setWeatherText(
+            fallback
+                ? `${locationLabel} 기준 · 위치 권한이 막혀 기본 위치로 표시 중`
+                : `${locationLabel} 기준`
+        );
+      } catch (e) {
+        console.error(e);
+        setWeather(null);
+        setLocationName(locationLabel);
+        setWeatherText("날씨 불러오기 실패");
+      }
+    };
+
     if (!navigator.geolocation) {
-      setWeather(null);
-      setWeatherText("브라우저가 현재 위치를 지원하지 않아요.");
-      setLocationName("현재 위치");
+      setWeatherText("브라우저가 현재 위치를 지원하지 않아 기본 위치로 불러오는 중...");
+      fetchWeatherByCoords(
+          fallbackLocation.lat,
+          fallbackLocation.lon,
+          fallbackLocation.name,
+          true
+      );
       return;
     }
 
@@ -1595,29 +1630,28 @@ function App() {
 
     navigator.geolocation.getCurrentPosition(
         async (pos) => {
-          try {
-            const lat = pos.coords.latitude;
-            const lon = pos.coords.longitude;
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const guessedName = guessLocationName(lat, lon);
 
-            const guessedName = guessLocationName(lat, lon);
-            setLocationName(guessedName);
-
-            const res = await fetch(`${API_BASE}/api/weather?latitude=${lat}&longitude=${lon}`);
-            const data = await res.json();
-
-            setWeather(data.current_weather);
-            setWeatherText(`${guessedName} 기준`);
-          } catch (e) {
-            console.error(e);
-            setWeather(null);
-            setWeatherText("날씨 불러오기 실패");
-            setLocationName("현재 위치");
-          }
+          await fetchWeatherByCoords(lat, lon, guessedName, false);
         },
-        () => {
-          setWeather(null);
-          setWeatherText("현재 위치 권한이 필요해요.");
-          setLocationName("현재 위치");
+        async (error) => {
+          console.warn("위치 권한 또는 보안 정책으로 위치를 가져오지 못했어요.", error);
+
+          setWeatherText("현재 위치 권한이 필요해요. 기본 위치로 불러오는 중...");
+
+          await fetchWeatherByCoords(
+              fallbackLocation.lat,
+              fallbackLocation.lon,
+              fallbackLocation.name,
+              true
+          );
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 1000 * 60 * 5,
         }
     );
   };
@@ -2148,6 +2182,11 @@ function App() {
     window.history.replaceState({}, "", "/");
     loadRooms();
     loadTodos();
+
+    // 로그인 후 위치기반 날씨 자동 호출
+    setTimeout(() => {
+      loadWeather();
+    }, 500);
   }, [loginMember]);
 
   useEffect(() => {
@@ -2583,22 +2622,19 @@ function App() {
         </aside>
 
         <main className="main">
-          <section className="today-area">
-            <div className="today-card weather">
-              <span>오늘 날씨</span>
+          <section className="today-area mobile-info-area">
+            <div className="today-card todo-summary">
+              <span>오늘 할 일</span>
+              <h3>{todos.filter((todo) => !todo.done).length}개 남음</h3>
+              <p>완료 {todos.filter((todo) => todo.done).length}개</p>
+            </div>
+
+            <div className="today-card location-card">
+              <span>현재 위치</span>
               <h3>{locationName}</h3>
+              <p>위치 권한을 허용하면 현재 지역 기준으로 날씨를 불러옵니다.</p>
 
-              {weather ? (
-                  <p>
-                    {getWeatherIcon(weather.weathercode)} {weather.temperature}℃
-                    <br />
-                    {weatherText}
-                  </p>
-              ) : (
-                  <p>{weatherText}</p>
-              )}
-
-              <div style={{ display: "flex", justifyContent: "center", gap: "8px", flexWrap: "wrap", marginTop: "14px" }}>
+              <div className="location-card-buttons">
                 <button onClick={loadWeather} style={locationButtonStyle}>
                   📍 현재 위치
                 </button>
@@ -2609,16 +2645,21 @@ function App() {
               </div>
             </div>
 
+            <div className="today-card weather">
+              <span>오늘 날씨</span>
+              <h3>{weather ? `${getWeatherIcon(weather.weathercode)} ${weather.temperature}℃` : "날씨 정보"}</h3>
+
+              {weather ? (
+                  <p>{weatherText}</p>
+              ) : (
+                  <p>{weatherText}</p>
+              )}
+            </div>
+
             <div className="today-card fortune">
               <span>오늘의 운세</span>
               <h3>{loginMember.nickname} 님</h3>
               <p>{fortune}</p>
-            </div>
-
-            <div className="today-card todo-summary">
-              <span>오늘 할 일</span>
-              <h3>{todos.filter((todo) => !todo.done).length}개 남음</h3>
-              <p>완료 {todos.filter((todo) => todo.done).length}개</p>
             </div>
           </section>
 
