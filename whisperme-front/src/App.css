@@ -4648,3 +4648,20 @@ body {
     background: transparent !important;
   }
 }
+
+/* 모바일 스크롤바 숨김 */
+@media (max-width: 850px) {
+  .message-list,
+  .main,
+  .chat-panel {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  .message-list::-webkit-scrollbar,
+  .main::-webkit-scrollbar,
+  .chat-panel::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+  }
+}
