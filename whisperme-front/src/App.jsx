@@ -3127,15 +3127,15 @@ function App() {
                           onChange={handleFileUpload}
                       />
 
-                      <button
-                          type="button"
-                          className={`voice-input-btn ${isListening ? "listening" : ""}`}
-                          onClick={startVoiceInput}
-                          title="음성 입력"
-                          disabled={uploading}
-                      >
-                        {isListening ? "🎙️" : "🎤"}
-                      </button>
+                      {/*<button*/}
+                      {/*    type="button"*/}
+                      {/*    className={`voice-input-btn ${isListening ? "listening" : ""}`}*/}
+                      {/*    onClick={startVoiceInput}*/}
+                      {/*    title="음성 입력"*/}
+                      {/*    disabled={uploading}*/}
+                      {/*>*/}
+                      {/*  {isListening ? "🎙️" : "🎤"}*/}
+                      {/*</button>*/}
 
                       <textarea
                           value={input}
