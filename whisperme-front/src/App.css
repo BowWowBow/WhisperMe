@@ -390,7 +390,7 @@ button {
 
 .today-area {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 18px;
   margin-bottom: 22px;
 }
@@ -4909,5 +4909,123 @@ body {
 
   .voice-input-btn {
     display: none !important;
+  }
+}
+
+/* =========================================================
+   Today Cards 2x2 Final Override
+   - 배치: 오늘 할 일 / 오늘 날씨 / 현재 위치 / 오늘의 운세
+   - 데스크톱, 태블릿, 모바일 모두 2개씩 정렬
+   ========================================================= */
+
+.today-area,
+.mobile-info-area,
+.today-area.mobile-info-area {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+  align-items: stretch !important;
+}
+
+.today-area .today-card,
+.mobile-info-area .today-card,
+.today-area.mobile-info-area .today-card {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.today-area .todo-summary,
+.mobile-info-area .todo-summary,
+.today-area.mobile-info-area .todo-summary {
+  grid-column: auto !important;
+}
+
+@media (max-width: 850px) {
+  .today-area,
+  .mobile-info-area,
+  .today-area.mobile-info-area {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .today-area .today-card,
+  .mobile-info-area .today-card,
+  .today-area.mobile-info-area .today-card {
+    min-height: 108px !important;
+    padding: 13px 8px !important;
+    border-radius: 20px !important;
+    text-align: center !important;
+  }
+
+  .today-area .today-card span,
+  .mobile-info-area .today-card span,
+  .today-area.mobile-info-area .today-card span {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 5px !important;
+  }
+
+  .today-area .today-card h3,
+  .mobile-info-area .today-card h3,
+  .today-area.mobile-info-area .today-card h3 {
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    margin: 5px 0 5px !important;
+    word-break: keep-all !important;
+  }
+
+  .today-area .today-card p,
+  .mobile-info-area .today-card p,
+  .today-area.mobile-info-area .today-card p {
+    font-size: 10.5px !important;
+    line-height: 1.35 !important;
+    word-break: keep-all !important;
+    overflow-wrap: break-word !important;
+    margin: 0 !important;
+  }
+
+  .location-card-buttons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 5px !important;
+    margin-top: 8px !important;
+  }
+
+  .location-card-buttons button {
+    width: 100% !important;
+    height: 30px !important;
+    min-height: 30px !important;
+    padding: 0 3px !important;
+    font-size: 9.5px !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .today-area,
+  .mobile-info-area,
+  .today-area.mobile-info-area {
+    gap: 8px !important;
+  }
+
+  .today-area .today-card,
+  .mobile-info-area .today-card,
+  .today-area.mobile-info-area .today-card {
+    min-height: 102px !important;
+    padding: 11px 7px !important;
+  }
+
+  .today-area .today-card h3,
+  .mobile-info-area .today-card h3,
+  .today-area.mobile-info-area .today-card h3 {
+    font-size: 14px !important;
+  }
+
+  .today-area .today-card p,
+  .mobile-info-area .today-card p,
+  .today-area.mobile-info-area .today-card p {
+    font-size: 10px !important;
   }
 }

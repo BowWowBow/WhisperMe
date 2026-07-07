@@ -2642,6 +2642,17 @@ function App() {
               <p>완료 {todos.filter((todo) => todo.done).length}개</p>
             </div>
 
+            <div className="today-card weather">
+              <span>오늘 날씨</span>
+              <h3>{weather ? `${getWeatherIcon(weather.weathercode)} ${weather.temperature}℃` : "날씨 정보"}</h3>
+
+              {weather ? (
+                  <p>{weatherText}</p>
+              ) : (
+                  <p>{weatherText}</p>
+              )}
+            </div>
+
             <div className="today-card location-card">
               <span>현재 위치</span>
               <h3>{locationName}</h3>
@@ -2656,17 +2667,6 @@ function App() {
                   권한 안내
                 </button>
               </div>
-            </div>
-
-            <div className="today-card weather">
-              <span>오늘 날씨</span>
-              <h3>{weather ? `${getWeatherIcon(weather.weathercode)} ${weather.temperature}℃` : "날씨 정보"}</h3>
-
-              {weather ? (
-                  <p>{weatherText}</p>
-              ) : (
-                  <p>{weatherText}</p>
-              )}
             </div>
 
             <div className="today-card fortune">
