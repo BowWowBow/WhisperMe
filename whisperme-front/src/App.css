@@ -4803,3 +4803,70 @@ body {
     font-size: 13px !important;
   }
 }
+
+@media (max-width: 768px) {
+  .whisper-home .ocean {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .whisper-home .whale {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    left: 12% !important;
+    top: 38% !important;
+    font-size: 42px !important;
+    z-index: 10 !important;
+    animation: whaleSwimMobile 7s linear infinite !important;
+  }
+
+  @keyframes whaleSwimMobile {
+    0% {
+      transform: translateX(-80px);
+    }
+    100% {
+      transform: translateX(360px);
+    }
+  }
+
+  .suggestion-card,
+  .suggestion-card *,
+  .quick-question-card,
+  .quick-question-card *,
+  .question-suggestion,
+  .question-suggestion *,
+  .recommended-question,
+  .recommended-question * {
+    color: #0f172a !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-indent: 0 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .assistant-tool-row {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .assistant-tool-row button {
+    width: auto !important;
+    min-width: 72px !important;
+    height: 42px !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    color: #0369a1 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-indent: 0 !important;
+    white-space: nowrap !important;
+  }
+}
