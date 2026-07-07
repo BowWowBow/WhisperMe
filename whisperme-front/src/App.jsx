@@ -788,7 +788,21 @@ function App() {
     }
 
     try {
-      await navigator.clipboard.writeText(text);
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
       showNotice("답변을 복사했어요.");
     } catch (e) {
       console.error(e);
@@ -2953,12 +2967,6 @@ function App() {
                                               </button>
                                               <button type="button" onClick={() => regenerateAnswer(msg)} disabled={uploading}>
                                                 🔄 다시 생성
-                                              </button>
-                                              <button type="button" onClick={() => speakText(msg.content)}>
-                                                🔊 읽기
-                                              </button>
-                                              <button type="button" onClick={stopSpeaking}>
-                                                ⏹ 정지
                                               </button>
                                               <button
                                                   type="button"
