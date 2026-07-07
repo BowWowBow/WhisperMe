@@ -4784,3 +4784,22 @@ body {
     white-space: normal !important;
   }
 }
+
+@media (max-width: 768px) {
+  .suggestion-card {
+    color: #111827 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-indent: 0 !important;
+  }
+
+  .suggestion-card span,
+  .suggestion-card p,
+  .suggestion-card div {
+    color: #111827 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    font-size: 13px !important;
+  }
+}
