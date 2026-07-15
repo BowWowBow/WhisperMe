@@ -1,0 +1,70 @@
+기적 맞다 ㅠㅠ 드디어 배포 성공이야.
+
+WhisperMe 배포 트러블슈팅 정리
+문제 상황
+
+AWS EC2에 Docker로 WhisperMe를 배포한 뒤 프론트 화면은 접속됐지만, 회원가입/로그인 요청이 실패했다.
+
+발생 오류
+
+브라우저 개발자도구 Console에서 다음 오류가 발생했다.
+
+Access to fetch at 'http://43.203.123.217:8083/api/member/join'
+from origin 'http://43.203.123.217:5173'
+has been blocked by CORS policy
+
+또한 기존 프론트 빌드 파일에는 API 주소가 다음처럼 남아 있었다.
+
+http://localhost:8083
+원인
+
+로컬 개발 환경에서는 프론트가 localhost:5173, 백엔드가 localhost:8083으로 동작했기 때문에 문제가 없었다.
+
+하지만 AWS 배포 환경에서는 사용자의 브라우저 기준 localhost가 EC2 서버가 아니라 사용자 PC를 의미한다. 그래서 프론트가 백엔드 서버가 아닌 사용자 PC의 localhost:8083으로 요청을 보내면서 API 호출이 실패했다.
+
+또한 백엔드 CORS 설정이 기존에는 다음처럼 로컬 프론트 주소만 허용하고 있었다.
+
+.allowedOrigins("http://localhost:5173")
+
+배포된 프론트 주소인
+
+http://43.203.123.217:5173
+
+가 허용되어 있지 않아 브라우저에서 CORS 차단이 발생했다.
+
+해결 과정
+
+프론트 코드의 API 주소를 로컬 주소에서 EC2 서버 주소로 변경했다.
+
+http://localhost:8083
+
+에서
+
+http://43.203.123.217:8083
+
+으로 수정했다.
+
+그리고 백엔드 WebConfig.java의 CORS 설정에 배포된 프론트 주소를 추가했다.
+
+@Override
+public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+            .allowedOrigins(
+                    "http://localhost:5173",
+                    "http://43.203.123.217:5173"
+            )
+            .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
+            .allowedHeaders("*");
+}
+
+수정 후 Docker 이미지를 다시 빌드하고 컨테이너를 재실행했다.
+
+sudo docker compose up -d --build frontend
+sudo docker compose up -d --build backend
+결과
+
+프론트에서 회원가입/로그인 API 요청이 정상적으로 백엔드 서버로 전달되었고, CORS 오류가 해결되어 WhisperMe 서비스에 정상 접속할 수 있었다.
+
+배운 점
+
+배포 환경에서는 localhost가 서버가 아니라 사용자의 PC를 의미하므로, 프론트에서 호출하는 API 주소를 실제 서버 IP 또는 도메인으로 변경해야 한다. 또한 프론트와 백엔드의 포트가 다른 경우 브라우저 보안 정책에 의해 CORS 설정이 반드시 필요하다.
