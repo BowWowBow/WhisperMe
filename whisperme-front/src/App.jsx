@@ -5,7 +5,7 @@ import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github.min.css";
 import "./App.css";
 
-const API_BASE = "http://localhost:8083";
+const API_BASE = "";
 const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
 const normalizeAiText = (text) => {
