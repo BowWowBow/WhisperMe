@@ -10,7 +10,8 @@ import java.util.Map;
 @RequestMapping("/api/member")
 @CrossOrigin(origins = {
         "http://localhost:5173",
-        "http://13.125.217.252:5173"
+        "http://13.125.217.252:5173",
+        "https://whisper.jkyungsoo.com"
 })
 public class MemberController {
 

@@ -17,7 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(
                         "http://localhost:5173",
-                        "http://43.203.123.217:5173"
+                        "http://43.203.123.217:5173",
+                        "https://whisper.jkyungsoo.com"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowedHeaders("*");
